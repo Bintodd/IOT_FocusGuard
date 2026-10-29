@@ -89,13 +89,13 @@ Salin direktori proyek ke kedua HP, atau salin berkas `config/config.py` beserta
 
 ### Menjalankan Node Edge
 
-**HP A (Study Phone — diletakkan di meja):**
+**HP A (Study Phone diletakkan di meja):**
 ```bash
 python mobile/hp_a_study_phone.py
 ```
 *Script membaca sensor `lsm6dsoq_acc` dan `lsm6dsoq_gyro` (atau fallback accelerometer standar).*
 
-**HP B (Activity Reference — disimpan di saku pengguna):**
+**HP B (Activity Reference disimpan di saku pengguna):**
 ```bash
 python mobile/hp_b_activity_ref.py
 ```
