@@ -42,7 +42,7 @@ Kebutuhan: **Python 3.10+** dan koneksi internet.
 ### Instalasi Dependensi
 
 ```bash
-git clone https://github.com/[username]/focusguard.git
+git clone https://github.com/Bintodd/IOT_FocusGuard.git
 cd focusguard
 pip install -r requirements.txt
 ```
