@@ -1,0 +1,495 @@
+[
+  {
+    "session_id": "SES-20261029-193034-be3f",
+    "title": "Sesi Belajar Mandiri",
+    "state": "COMPLETED",
+    "start_time_iso": "2026-10-29 19:30:34",
+    "end_time_iso": "2026-10-29 19:30:48",
+    "metrics": {
+      "t_s_sec": 13.2,
+      "t_i_sec": 13.2,
+      "continuity_ratio": 0.3,
+      "interruption_count": 1,
+      "interruption_frequency": 4.53,
+      "formatted_t_s": "00:00:13",
+      "formatted_t_i": "00:00:13"
+    },
+    "current_fused_state": "INTERUPSI_HP_MEJA",
+    "current_fused_description": "HP meja terangkat / digerakkan (pengguna tetap di tempat).",
+    "devices": {
+      "study_phone": {
+        "online": true,
+        "last_seen_sec_ago": 0.2,
+        "latest": {
+          "device_id": "study_phone",
+          "timestamp": 1793277046.5638916,
+          "acc_raw": {
+            "x": 0.0521,
+            "y": 0.0161,
+            "z": 9.867
+          },
+          "gyro_raw": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "acc_mag": 9.867,
+          "acc_dev": 1.023,
+          "gyro_mag": 0.0,
+          "acc_std": 2.006,
+          "gyro_std": 0.921,
+          "baseline_gravity": 8.844,
+          "is_moving": true,
+          "trigger_reason": "acc_dynamic"
+        }
+      },
+      "activity_ref": {
+        "online": true,
+        "last_seen_sec_ago": 0.3,
+        "latest": {
+          "device_id": "activity_ref",
+          "timestamp": 1793277046.46696,
+          "acc_raw": {
+            "x": -0.041,
+            "y": 0.3,
+            "z": 9.831
+          },
+          "gyro_raw": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "acc_mag": 9.836,
+          "acc_dev": 0.009,
+          "gyro_mag": 0.0,
+          "acc_std": 0.003,
+          "gyro_std": 0.001,
+          "baseline_gravity": 9.827,
+          "is_moving": false,
+          "trigger_reason": "none"
+        }
+      }
+    },
+    "active_interruption": null,
+    "interruptions": [
+      {
+        "event_id": "INT-1",
+        "start_time": 1793277034.7756455,
+        "end_time": 1793277048.0142822,
+        "duration_sec": 13.2,
+        "start_str": "19:30:34",
+        "end_str": "19:30:48",
+        "type": "HP_DIANGKAT_DIMEJA",
+        "description": "HP meja terangkat / digerakkan (pengguna tetap di tempat)."
+      }
+    ]
+  },
+  {
+    "session_id": "SES-20261029-193127-c04e",
+    "title": "Sesi Belajar Mandiri",
+    "state": "COMPLETED",
+    "start_time_iso": "2026-10-29 19:31:27",
+    "end_time_iso": "2026-10-29 19:32:02",
+    "metrics": {
+      "t_s_sec": 34.6,
+      "t_i_sec": 34.5,
+      "continuity_ratio": 0.2,
+      "interruption_count": 1,
+      "interruption_frequency": 1.74,
+      "formatted_t_s": "00:00:34",
+      "formatted_t_i": "00:00:34"
+    },
+    "current_fused_state": "INTERUPSI_HP_MEJA",
+    "current_fused_description": "HP meja terangkat / digerakkan (pengguna tetap di tempat).",
+    "devices": {
+      "study_phone": {
+        "online": true,
+        "last_seen_sec_ago": 0.1,
+        "latest": {
+          "device_id": "study_phone",
+          "timestamp": 1793277121.128048,
+          "acc_raw": {
+            "x": 0.095,
+            "y": 0.056,
+            "z": 9.8621
+          },
+          "gyro_raw": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "acc_mag": 9.863,
+          "acc_dev": 0.917,
+          "gyro_mag": 0.0,
+          "acc_std": 0.003,
+          "gyro_std": 0.001,
+          "baseline_gravity": 8.946,
+          "is_moving": true,
+          "trigger_reason": "acc_dynamic"
+        }
+      },
+      "activity_ref": {
+        "online": true,
+        "last_seen_sec_ago": 0.2,
+        "latest": {
+          "device_id": "activity_ref",
+          "timestamp": 1793277120.8205369,
+          "acc_raw": {
+            "x": -0.039,
+            "y": 0.3461,
+            "z": 9.827
+          },
+          "gyro_raw": {
+            "x": 0.0011,
+            "y": -0.0026,
+            "z": 0.0001
+          },
+          "acc_mag": 9.833,
+          "acc_dev": 0.001,
+          "gyro_mag": 0.003,
+          "acc_std": 0.003,
+          "gyro_std": 0.001,
+          "baseline_gravity": 9.833,
+          "is_moving": false,
+          "trigger_reason": "none"
+        }
+      }
+    },
+    "active_interruption": null,
+    "interruptions": [
+      {
+        "event_id": "INT-1",
+        "start_time": 1793277087.8077135,
+        "end_time": 1793277122.2732146,
+        "duration_sec": 34.5,
+        "start_str": "19:31:27",
+        "end_str": "19:32:02",
+        "type": "HP_DIANGKAT_DIMEJA -> PINDAH_MEMBAWA_HP",
+        "description": "HP meja terangkat / digerakkan (pengguna tetap di tempat)."
+      }
+    ]
+  },
+  {
+    "session_id": "SES-20261029-193837-2d9c",
+    "title": "Sesi Belajar Mandiri",
+    "state": "COMPLETED",
+    "start_time_iso": "2026-10-29 19:38:37",
+    "end_time_iso": "2026-10-29 19:41:36",
+    "metrics": {
+      "t_s_sec": 179.7,
+      "t_i_sec": 80.2,
+      "continuity_ratio": 55.4,
+      "interruption_count": 10,
+      "interruption_frequency": 3.34,
+      "formatted_t_s": "00:02:59",
+      "formatted_t_i": "00:01:20"
+    },
+    "current_fused_state": "FOKUS_BELAJAR",
+    "current_fused_description": "Kondisi stabil. Sesi belajar berjalan kontinu.",
+    "devices": {
+      "study_phone": {
+        "online": true,
+        "last_seen_sec_ago": 0.1,
+        "latest": {
+          "device_id": "study_phone",
+          "timestamp": 1793277695.583158,
+          "acc_raw": {
+            "x": 0.138,
+            "y": 0.068,
+            "z": 9.86
+          },
+          "gyro_raw": {
+            "x": 0.0,
+            "y": 0.0001,
+            "z": 0.0
+          },
+          "acc_mag": 9.861,
+          "acc_dev": 0.001,
+          "gyro_mag": 0.0,
+          "acc_std": 0.004,
+          "gyro_std": 0.0,
+          "baseline_gravity": 9.86,
+          "is_moving": false,
+          "trigger_reason": "none"
+        }
+      },
+      "activity_ref": {
+        "online": true,
+        "last_seen_sec_ago": 0.1,
+        "latest": {
+          "device_id": "activity_ref",
+          "timestamp": 1793277695.2649152,
+          "acc_raw": {
+            "x": 0.156,
+            "y": 0.365,
+            "z": 9.8291
+          },
+          "gyro_raw": {
+            "x": -0.0026,
+            "y": -0.0003,
+            "z": -0.0008
+          },
+          "acc_mag": 9.837,
+          "acc_dev": 0.001,
+          "gyro_mag": 0.003,
+          "acc_std": 0.004,
+          "gyro_std": 0.001,
+          "baseline_gravity": 9.838,
+          "is_moving": false,
+          "trigger_reason": "none"
+        }
+      }
+    },
+    "active_interruption": null,
+    "interruptions": [
+      {
+        "event_id": "INT-1",
+        "start_time": 1793277527.7152827,
+        "end_time": 1793277530.5868945,
+        "duration_sec": 2.9,
+        "start_str": "19:38:47",
+        "end_str": "19:38:50",
+        "type": "PENGGUNA_MENINGGALKAN_MEJA",
+        "description": "HP A di meja diam, namun pengguna terdeteksi bergerak/meninggalkan meja."
+      },
+      {
+        "event_id": "INT-2",
+        "start_time": 1793277537.822727,
+        "end_time": 1793277543.6074083,
+        "duration_sec": 5.8,
+        "start_str": "19:38:57",
+        "end_str": "19:39:03",
+        "type": "HP_DIANGKAT_DIMEJA",
+        "description": "HP meja terangkat / digerakkan (pengguna tetap di tempat)."
+      },
+      {
+        "event_id": "INT-3",
+        "start_time": 1793277549.2314126,
+        "end_time": 1793277555.8809361,
+        "duration_sec": 6.6,
+        "start_str": "19:39:09",
+        "end_str": "19:39:15",
+        "type": "PENGGUNA_MENINGGALKAN_MEJA -> PINDAH_MEMBAWA_HP",
+        "description": "HP A di meja diam, namun pengguna terdeteksi bergerak/meninggalkan meja."
+      },
+      {
+        "event_id": "INT-4",
+        "start_time": 1793277566.6612241,
+        "end_time": 1793277576.5244198,
+        "duration_sec": 9.9,
+        "start_str": "19:39:26",
+        "end_str": "19:39:36",
+        "type": "HP_DIANGKAT_DIMEJA + HP_DIANGKAT_DIMEJA",
+        "description": "HP meja terangkat / digerakkan (pengguna tetap di tempat)."
+      },
+      {
+        "event_id": "INT-5",
+        "start_time": 1793277588.7665863,
+        "end_time": 1793277600.80764,
+        "duration_sec": 12.0,
+        "start_str": "19:39:48",
+        "end_str": "19:40:00",
+        "type": "HP_DIANGKAT_DIMEJA",
+        "description": "HP meja terangkat / digerakkan (pengguna tetap di tempat)."
+      },
+      {
+        "event_id": "INT-6",
+        "start_time": 1793277611.9689653,
+        "end_time": 1793277619.94045,
+        "duration_sec": 8.0,
+        "start_str": "19:40:11",
+        "end_str": "19:40:19",
+        "type": "HP_DIANGKAT_DIMEJA",
+        "description": "HP meja terangkat / digerakkan (pengguna tetap di tempat)."
+      },
+      {
+        "event_id": "INT-7",
+        "start_time": 1793277624.5017781,
+        "end_time": 1793277632.8021216,
+        "duration_sec": 8.3,
+        "start_str": "19:40:24",
+        "end_str": "19:40:32",
+        "type": "PENGGUNA_MENINGGALKAN_MEJA -> PINDAH_MEMBAWA_HP -> HP_DIANGKAT_DIMEJA",
+        "description": "HP A di meja diam, namun pengguna terdeteksi bergerak/meninggalkan meja."
+      },
+      {
+        "event_id": "INT-8",
+        "start_time": 1793277650.002367,
+        "end_time": 1793277658.1192968,
+        "duration_sec": 8.1,
+        "start_str": "19:40:50",
+        "end_str": "19:40:58",
+        "type": "PENGGUNA_MENINGGALKAN_MEJA -> PINDAH_MEMBAWA_HP -> HP_DIANGKAT_DIMEJA",
+        "description": "HP A di meja diam, namun pengguna terdeteksi bergerak/meninggalkan meja."
+      },
+      {
+        "event_id": "INT-9",
+        "start_time": 1793277664.9591827,
+        "end_time": 1793277680.6545963,
+        "duration_sec": 15.7,
+        "start_str": "19:41:04",
+        "end_str": "19:41:20",
+        "type": "PENGGUNA_MENINGGALKAN_MEJA -> PINDAH_MEMBAWA_HP",
+        "description": "HP A di meja diam, namun pengguna terdeteksi bergerak/meninggalkan meja."
+      },
+      {
+        "event_id": "INT-10",
+        "start_time": 1793277685.7687156,
+        "end_time": 1793277688.6904995,
+        "duration_sec": 2.9,
+        "start_str": "19:41:25",
+        "end_str": "19:41:28",
+        "type": "PENGGUNA_MENINGGALKAN_MEJA",
+        "description": "HP A di meja diam, namun pengguna terdeteksi bergerak/meninggalkan meja."
+      }
+    ]
+  },
+  {
+    "session_id": "SES-20261029-194202-9f05",
+    "title": "Sesi Belajar Mandiri",
+    "state": "COMPLETED",
+    "start_time_iso": "2026-10-29 19:42:02",
+    "end_time_iso": "2026-10-29 19:42:07",
+    "metrics": {
+      "t_s_sec": 4.8,
+      "t_i_sec": 0,
+      "continuity_ratio": 100.0,
+      "interruption_count": 0,
+      "interruption_frequency": 0.0,
+      "formatted_t_s": "00:00:04",
+      "formatted_t_i": "00:00:00"
+    },
+    "current_fused_state": "FOKUS_BELAJAR",
+    "current_fused_description": "Kondisi stabil. Sesi belajar berjalan kontinu.",
+    "devices": {
+      "study_phone": {
+        "online": true,
+        "last_seen_sec_ago": 0.2,
+        "latest": {
+          "device_id": "study_phone",
+          "timestamp": 1793277726.1343856,
+          "acc_raw": {
+            "x": 0.078,
+            "y": -0.039,
+            "z": 9.8621
+          },
+          "gyro_raw": {
+            "x": 0.0,
+            "y": 0.0003,
+            "z": 0.0
+          },
+          "acc_mag": 9.862,
+          "acc_dev": 0.001,
+          "gyro_mag": 0.0,
+          "acc_std": 0.005,
+          "gyro_std": 0.0,
+          "baseline_gravity": 9.862,
+          "is_moving": false,
+          "trigger_reason": "none"
+        }
+      },
+      "activity_ref": {
+        "online": true,
+        "last_seen_sec_ago": 0.2,
+        "latest": {
+          "device_id": "activity_ref",
+          "timestamp": 1793277726.0522866,
+          "acc_raw": {
+            "x": 0.156,
+            "y": 0.365,
+            "z": 9.824
+          },
+          "gyro_raw": {
+            "x": -0.0014,
+            "y": 0.0011,
+            "z": 0.0003
+          },
+          "acc_mag": 9.832,
+          "acc_dev": 0.003,
+          "gyro_mag": 0.002,
+          "acc_std": 0.004,
+          "gyro_std": 0.001,
+          "baseline_gravity": 9.835,
+          "is_moving": false,
+          "trigger_reason": "none"
+        }
+      }
+    },
+    "active_interruption": null,
+    "interruptions": []
+  },
+  {
+    "session_id": "SES-20261029-194210-f6aa",
+    "title": "tes1",
+    "state": "COMPLETED",
+    "start_time_iso": "2026-10-29 19:42:10",
+    "end_time_iso": "2026-10-29 19:42:19",
+    "metrics": {
+      "t_s_sec": 9.0,
+      "t_i_sec": 0,
+      "continuity_ratio": 100.0,
+      "interruption_count": 0,
+      "interruption_frequency": 0.0,
+      "formatted_t_s": "00:00:08",
+      "formatted_t_i": "00:00:00"
+    },
+    "current_fused_state": "FOKUS_BELAJAR",
+    "current_fused_description": "Kondisi stabil. Sesi belajar berjalan kontinu.",
+    "devices": {
+      "study_phone": {
+        "online": true,
+        "last_seen_sec_ago": 0.0,
+        "latest": {
+          "device_id": "study_phone",
+          "timestamp": 1793277738.3926284,
+          "acc_raw": {
+            "x": 0.081,
+            "y": -0.0341,
+            "z": 9.858
+          },
+          "gyro_raw": {
+            "x": 0.0,
+            "y": 0.0004,
+            "z": 0.0
+          },
+          "acc_mag": 9.858,
+          "acc_dev": 0.002,
+          "gyro_mag": 0.0,
+          "acc_std": 0.003,
+          "gyro_std": 0.0,
+          "baseline_gravity": 9.86,
+          "is_moving": false,
+          "trigger_reason": "none"
+        }
+      },
+      "activity_ref": {
+        "online": true,
+        "last_seen_sec_ago": 0.3,
+        "latest": {
+          "device_id": "activity_ref",
+          "timestamp": 1793277737.9203737,
+          "acc_raw": {
+            "x": 0.144,
+            "y": 0.353,
+            "z": 9.8291
+          },
+          "gyro_raw": {
+            "x": -0.0001,
+            "y": -0.0003,
+            "z": -0.0003
+          },
+          "acc_mag": 9.836,
+          "acc_dev": 0.005,
+          "gyro_mag": 0.0,
+          "acc_std": 0.004,
+          "gyro_std": 0.001,
+          "baseline_gravity": 9.831,
+          "is_moving": false,
+          "trigger_reason": "none"
+        }
+      }
+    },
+    "active_interruption": null,
+    "interruptions": []
+  }
+]
