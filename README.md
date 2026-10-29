@@ -93,7 +93,7 @@ Salin direktori proyek ke kedua HP, atau salin berkas `config/config.py` beserta
 ```bash
 python mobile/hp_a_study_phone.py
 ```
-*Script membaca sensor `lsm6dsoq_acc` dan `lsm6dsoq_gyro` (atau fallback accelerometer standar).*
+*Script membaca sensor `lsm6dsoq_acc` dan `lsm6dsoq_gyro` dapat diganti menyesuaikan nama sensor untuk HP A*
 
 **HP B (Activity Reference disimpan di saku pengguna):**
 ```bash
@@ -126,7 +126,6 @@ python mobile/hp_b_activity_ref.py
 ## Panduan Tambahan
 
 - Panduan instalasi dan debugging sensor Termux: [`PANDUAN_PENGGUNAAN.md`](PANDUAN_PENGGUNAAN.md)
-- Naskah dan struktur slide presentasi dosen: [`FocusGuard_PPT_Content.md`](file:///C:/Users/ASUS/.gemini/antigravity/brain/8a01f711-2e46-4023-88f7-7a1e7313c84b/FocusGuard_PPT_Content.md)
 
 ## Batasan Sistem
 
