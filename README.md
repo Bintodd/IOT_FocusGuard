@@ -1,181 +1,134 @@
-# FocusGuard — Sistem IoT Pemantau Kontinuitas Sesi Belajar & Deteksi Interupsi
+# FocusGuard IoT
 
-FocusGuard adalah sistem IoT yang dirancang untuk memantau kontinuitas sesi belajar fisik secara objektif menggunakan fusi sensor gerak (accelerometer & gyroscope) pada dua ponsel Android dan satu laptop pemrosesan.
+Proyek IoT pemantau kontinuitas belajar: **2 HP Android sebagai edge**, **sensor accelerometer + gyroscope**, **2 tahap pengolahan data**, **MQTT Cloud HiveMQ**, dan **dashboard web di laptop**. Data bersumber dari sensor fisik langsung melalui Termux.
 
-> 📖 **Panduan Langkah demi Langkah Lengkap:** Lihat file [`PANDUAN_PENGGUNAAN.md`](file:///C:/Users/ASUS/.gemini/antigravity/scratch/FocusGuard/PANDUAN_PENGGUNAAN.md) untuk instruksi mendalam instalasi Termux, izin sensor, dan operasional sesi.
+## Cara Kerja
 
----
-
-## 1. Arsitektur Sistem
-
-```
-[ HP A: Study Phone ] (Di Meja Belajar)
-  - Sensor: lsm6dsoq_acc, lsm6dsoq_gyro
-  - Memantau pengangkatan / penggunaan HP di meja
-       │
-       ▼ (MQTT over TCP 1883 / TLS 8883)
-[ HiveMQ Cloud / Public Broker ] 
-       ▲
-       │ (MQTT over TCP 1883 / TLS 8883)
-[ HP B: Activity Reference ] (Di Saku Pengguna)
-  - Sensor: ACCELEROMETER, GYROSCOPE
-  - Memantau aktivitas fisik pengguna (duduk / berdiri / berjalan)
-       │
-       ▼
-[ Laptop Hub & Dashboard ]
-  - Receiver telemetri MQTT & sinkronisasi timestamp
-  - Pemrosesan sinyal: Magnitudo, Baseline Gravity Tracking, Dynamic Deviation
-  - Algoritma Fusi Sensor Berbasis Aturan (Rule-Based Sensor Fusion)
-  - Penghitung Kontinuitas Sesi (T_S, T_I, C, R_I) & Log Interupsi
-  - Real-time Web Dashboard (http://localhost:5000)
+```mermaid
+flowchart LR
+  subgraph DEVICES["Node Sistem"]
+    A["HP A · Edge 1 (Meja)<br/>Deteksi HP diangkat / dipindahkan"]
+    B["HP B · Edge 2 (Badan)<br/>Referensi gerak pengguna"]
+    L["Laptop · Hub & Dashboard<br/>localhost:5000"]
+  end
+  A -->|MQTT Telemetry| M["Broker MQTT Cloud<br/>HiveMQ Public"]
+  B -->|MQTT Telemetry| M
+  M -->|Telemetry| L
+  L -->|Session Control & Events| M
 ```
 
----
+| HP A (Meja) | HP B (Pengguna) | Keputusan Sistem | Keterangan |
+|:---|:---|:---|:---|
+| Diam | Diam | FOKUS | Sesi belajar berlangsung normal |
+| Bergerak | Diam | INTERUPSI | HP diangkat atau disentuh saat pengguna tetap di tempat |
+| Bergerak | Bergerak | COMMON_MOTION | Pengguna meninggalkan area belajar bersama HP |
+| Diam | Bergerak | FOKUS | Pengguna bergerak di sekitar meja tanpa mengganggu HP |
 
-## 2. Struktur Proyek
+## Ketentuan Teknis Proyek
 
-```
-FocusGuard/
-├── config/
-│   └── config.py               # Konfigurasi MQTT broker, topic, ambang batas (threshold)
-├── core/
-│   ├── __init__.py
-│   ├── mqtt_client.py          # Klien MQTT laptop (subscriber telemetri & publisher event)
-│   ├── processor.py            # Pemrosesan sinyal: magnitudo, EMA baseline, thresholding
-│   ├── session_manager.py      # State machine sesi, interval merging, kalkulasi metrik (C, R_I)
-│   └── storage.py              # Penyimpanan riwayat sesi ke session_history.json
-├── mobile/
-│   ├── hp_a_study_phone.py     # Script Termux HP A (lsm6dsoq_acc, lsm6dsoq_gyro)
-│   ├── hp_b_activity_ref.py    # Script Termux HP B (ACCELEROMETER, GYROSCOPE)
-│   ├── mock_devices.py         # IoT Mock Simulator untuk pengujian di laptop tanpa HP
-│   └── termux_setup.sh         # Shell script bantu instalasi lingkungan Termux
-├── web/
-│   ├── static/
-│   │   ├── css/style.css       # Styling & animasi dashboard
-│   │   └── js/dashboard.js     # Real-time dashboard controller & Chart.js live rendering
-│   ├── templates/
-│   │   └── index.html          # Antarmuka web dashboard interaktif
-│   └── server.py               # REST API & Web Server Flask
-├── data/
-│   └── session_history.json    # Database penyimpanan riwayat sesi belajar
-├── main.py                     # Entrypoint server laptop
-└── requirements.txt            # Dependensi Python
-```
+| Ketentuan | Implementasi FocusGuard |
+|:---|:---|
+| 2 Edge Devices | HP A (meja belajar) dan HP B (badan/saku pengguna) |
+| 2 Sensor per Device | Accelerometer dan Gyroscope |
+| 2 Data Processing | 1. RMS deviasi magnitudo dengan Adaptive EMA baseline<br/>2. Ekstraksi deviasi standar dan windowing sinyal rotasi |
+| Algoritma | Rule-based sensor fusion dengan debouncing (1.5 detik) dan interval merging (4 detik) |
+| Protokol Cloud | MQTT melalui broker publik HiveMQ (port 1883) |
+| Dashboard | Antarmuka web Flask + Chart.js di laptop (port 5000) |
 
----
+## 1. Laptop — Jalankan Server dan Dashboard
 
-## 3. Instalasi Dependensi Laptop
+Kebutuhan: **Python 3.10+** dan koneksi internet.
 
-Dependensi telah diinstall pada laptop. Jika perlu instalasi ulang:
+### Instalasi Dependensi
 
-```powershell
+```bash
+git clone https://github.com/[username]/focusguard.git
+cd focusguard
 pip install -r requirements.txt
 ```
 
----
+### Konfigurasi Identitas Proyek
 
-## 4. Panduan Menjalankan Sistem
+Buka berkas `config/config.py` dan pastikan `PROJECT_ID` unik untuk kelompok Anda:
 
-### Langkah 1: Jalankan Server FocusGuard di Laptop
+```python
+PROJECT_ID = "focusguard_group"
+```
 
-Buka terminal di folder FocusGuard dan jalankan:
+*Catatan: Nilai `PROJECT_ID` harus sama persis antara laptop dan kedua script HP.*
 
-```powershell
+### Jalankan Server
+
+```bash
 python main.py
 ```
 
-Output terminal akan menampilkan:
-- Status koneksi MQTT ke `broker.hivemq.com`
-- Topik yang disubscribe
-- Alamat Web Dashboard: `http://localhost:5000` (dan alamat IP LAN laptop)
+Buka peramban di laptop dan akses **http://localhost:5000**.
 
-Buka browser laptop dan akses `http://localhost:5000`.
+## 2. Menyiapkan HP A dan HP B via Termux
 
----
+Gunakan dua perangkat Android fisik dengan aplikasi **Termux** dan **Termux:API** (unduh via F-Droid).
 
-### Langkah 2: Menyiapkan HP A & HP B di Aplikasi Termux
+### Persiapan Lingkungan Termux (di kedua HP)
 
-#### A. Persiapan Awal di Kedua HP Android:
-1. Install aplikasi **Termux** (disarankan dari F-Droid).
-2. Install aplikasi pendukung **Termux:API** dari F-Droid.
-3. Buka **Pengaturan Android** -> **Aplikasi** -> **Termux:API** -> **Izin (Permissions)** -> Aktifkan izin **Sensor Fisik (Physical Activity / Body Sensors)**.
-4. Buka Termux di HP dan jalankan perintah:
-   ```bash
-   pkg update -y && pkg install -y python termux-api
-   pip install paho-mqtt
-   ```
-   *(Atau jalankan skrip bantu `bash termux_setup.sh`)*
-
----
-
-#### B. Menjalankan HP A (Study Phone — Di Meja Belajar):
-Salin file `mobile/hp_a_study_phone.py` ke HP A, lalu jalankan di Termux:
+Jalankan perintah berikut di terminal Termux:
 
 ```bash
-python hp_a_study_phone.py --project focusguard_group
+pkg update -y
+pkg install -y python termux-api git
+pip install paho-mqtt
 ```
 
-*HP A akan langsung membaca sensor `lsm6dsoq_acc` dan `lsm6dsoq_gyro`, menampilkan monitor real-time, dan mengirimkan telemetri MQTT ke broker.*
-
----
-
-#### C. Menjalankan HP B (Activity Reference — Di Saku Pengguna):
-Salin file `mobile/hp_b_activity_ref.py` ke HP B, simpan di saku celana, lalu jalankan di Termux:
+Pastikan sensor terbaca oleh Termux:API:
 
 ```bash
-python hp_b_activity_ref.py --project focusguard_group
+termux-sensor -l
 ```
 
-*HP B akan mendeteksi nama sensor secara dinamis (ACCELEROMETER dan GYROSCOPE), lalu mengirim telemetri ke broker.*
+Salin direktori proyek ke kedua HP, atau salin berkas `config/config.py` beserta script mobile masing-masing.
 
----
+### Menjalankan Node Edge
 
-## 5. Pengujian Cepat Tanpa HP Fisik (Mock Simulator)
+**HP A (Study Phone — diletakkan di meja):**
+```bash
+python mobile/hp_a_study_phone.py
+```
+*Script membaca sensor `lsm6dsoq_acc` dan `lsm6dsoq_gyro` (atau fallback accelerometer standar).*
 
-Jika ingin menguji seluruh alur kerja sistem, algoritma deteksi, fusi sensor, grafik Chart.js, dan metrik kontinuitas langsung di laptop:
+**HP B (Activity Reference — disimpan di saku pengguna):**
+```bash
+python mobile/hp_b_activity_ref.py
+```
+*Script mendeteksi sensor gerak otomatis dan mengirim status gerak pengguna.*
 
-1. Pastikan `python main.py` sedang berjalan di satu terminal.
-2. Buka terminal baru di laptop dan jalankan:
-   ```powershell
-   python mobile/mock_devices.py --auto
-   ```
-3. Simulator akan otomatis menjalankan rangkaian uji:
-   - Skenario 1: Belajar Tenang (Kedua HP Diam -> Kontinuitas 100%)
-   - Skenario 2: Senggolan Meja Sesaat (Durasi 0.8s -> Terfilter oleh Debounce, False Positive Ditolak!)
-   - Skenario 3: HP Meja Diangkat (HP A Bergerak, HP B Diam -> Interupsi Fisik Terdeteksi)
-   - Skenario 4: Pengguna Meninggalkan Meja (HP A Diam, HP B Bergerak -> Interupsi Away Terdeteksi)
-4. Amati pergerakan jarum/grafik dan log interupsi pada Dashboard Web di `http://localhost:5000`.
+## 3. Menjalankan dan Menguji Sesi
 
----
+1. Letakkan **HP A** di meja belajar dalam posisi stabil.
+2. Kantongi **HP B** atau pasang di badan pengguna.
+3. Buka dashboard di laptop (**http://localhost:5000**), lalu klik **Mulai Sesi**.
+4. **Skenario Normal:** Duduk tenang dan membaca. Dashboard mencatat status **Fokus**.
+5. **Skenario Interupsi Meja:** Angkat HP A tanpa bangkit dari kursi. Dashboard berganti ke status **Interupsi**.
+6. **Skenario Meninggalkan Meja:** Bawa HP A dan HP B berjalan bersamaan. Dashboard mencatat kondisi **Common Motion**.
+7. Akhiri sesi dengan tombol **Selesai**. Metrik akhir (Durasi Sesi, Total Durasi Interupsi, dan Rasio Kontinuitas) akan dihitung otomatis dan tersimpan ke riwayat.
 
-## 6. Formula Matematis & Logika Algoritma
+## Struktur Berkas Proyek
 
-### 1. Invariansi Rotasi Magnitudo Vektor
-\[
-a_{\mathrm{mag}}=\sqrt{a_x^2+a_y^2+a_z^2},\quad \omega_{\mathrm{mag}}=\sqrt{\omega_x^2+\omega_y^2+\omega_z^2}
-\]
-Besaran magnitudo skalar kebal terhadap perubahan orientasi HP (landscape, portrait, miring). Saat diam, $a_{\mathrm{mag}} \approx 9.81\ \text{m/s}^2$ dan $\omega_{\mathrm{mag}} \approx 0\ \text{rad/s}$.
+- `main.py`: Titik masuk server pengolah data dan perute dashboard laptop.
+- `core/processor.py`: Pengolahan sinyal accelerometer (RMS magnitudo deviasi) dan gyroscope (deviasi standar).
+- `core/session_manager.py`: Mesin status sesi, fusi sensor, debouncing, dan kalkulasi kontinuitas belajar.
+- `core/mqtt_client.py`: Klien MQTT untuk penerima telemetri edge dan penyalur event.
+- `mobile/hp_a_study_phone.py`: Node Edge 1 untuk membaca dan mengirim data HP meja.
+- `mobile/hp_b_activity_ref.py`: Node Edge 2 untuk membaca aktivitas fisik pengguna.
+- `mobile/mock_devices.py`: Simulator edge untuk pengujian sintesis tanpa HP fisik.
+- `web/server.py`: Layanan Flask REST API dan penyedia antarmuka visual.
+- `web/static/js/dashboard.js`: Pengendali visual dashboard dan grafik Chart.js real-time.
 
-### 2. Estimasi Baseline Gravitasi & Deviasi Dinamis
-\[
-g_{\mathrm{est}}(t) = \alpha \cdot a_{\mathrm{mag}}(t) + (1-\alpha) \cdot g_{\mathrm{est}}(t-1)
-\]
-\[
-a_{\mathrm{dev}} = |a_{\mathrm{mag}} - g_{\mathrm{est}}|
-\]
+## Panduan Tambahan
 
-### 3. Matriks Fusi Sensor
-| HP A (Meja) | HP B (Saku) | Klasifikasi Keadaan | Interpretasi Sistem |
-| :--- | :--- | :--- | :--- |
-| **Diam** | **Diam** | `FOKUS_BELAJAR` | Sesi belajar kontinu normal |
-| **Bergerak** | **Diam** | `INTERUPSI_HP_MEJA` | HP di meja diangkat/digunakan sambil duduk |
-| **Bergerak** | **Bergerak** | `INTERUPSI_PINDAH_MEMBAWA_HP` | Pengguna meninggalkan meja membawa HP |
-| **Diam** | **Bergerak** | `INTERUPSI_PENGGUNA_AWAY` | Pengguna mondar-mandir / meninggalkan meja |
+- Panduan instalasi dan debugging sensor Termux: [`PANDUAN_PENGGUNAAN.md`](PANDUAN_PENGGUNAAN.md)
+- Naskah dan struktur slide presentasi dosen: [`FocusGuard_PPT_Content.md`](file:///C:/Users/ASUS/.gemini/antigravity/brain/8a01f711-2e46-4023-88f7-7a1e7313c84b/FocusGuard_PPT_Content.md)
 
-### 4. Debounce & Interval Merging
-- **Debounce:** Gerakan dengan durasi $< 1.5$ detik (misal ketukan meja atau getaran sekilas) disaring sehingga tidak dihitung sebagai interupsi (mencegah false positive).
-- **Interval Merging:** Jika interupsi berikutnya muncul dalam interval $\le 4.0$ detik setelah interupsi sebelumnya, kedua interval digabungkan menjadi satu kesatuan durasi untuk mencegah fragmentasi noise.
+## Batasan Sistem
 
-### 5. Metrik Kontinuitas Sesi
-- **Rasio Kontinuitas:** $C = 100 \left(1 - \frac{T_I}{T_S}\right)$ (%)
-- **Frekuensi Interupsi:** $R_I = \frac{N_I}{T_S / 60}$ (interupsi per menit)
+- FocusGuard mengukur indikasi interupsi fisik (gerakan perangkat), bukan konsentrasi kognitif atau aktivitas gelombang otak pengguna.
+- Broker MQTT publik tidak memakai autentikasi berbayar. Gunakan `PROJECT_ID` unik dan jangan mentransmisikan data sensitif.
